@@ -96,16 +96,16 @@
 								<a href="#"><i class="fa fa-facebook"></i></a>
 								<a href="#"><i class="fa fa-twitter"></i></a>
 								<a href="#"><i class="fa fa-linkedin"></i></a>
-								<a href="#"><i class="fa fa-pinterest-p"></i></a>
+								<a href="#"><i class="fa fa-instagram"></i></a>
 							</div>
 							<div class="header__top__right__language">
-								<img src="<?php echo base_url('assets/img/language.png');?>" alt="">
-								<div>English</div>
-								<span class="arrow_carrot-down"></span>
+								<img src="<?php echo base_url('assets/img/indonesia.png');?>" alt="">
+								<div>INA</div>
+								<!-- <span class="arrow_carrot-down"></span>
 								<ul>
 									<li><a href="#">Spanis</a></li>
 									<li><a href="#">English</a></li>
-								</ul>
+								</ul> -->
 							</div>
 							<div class="header__top__right__auth">
 								<a href="#"><i class="fa fa-user"></i> Login</a>
