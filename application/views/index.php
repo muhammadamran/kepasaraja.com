@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html lang="eng">
-<head>
-	<meta charset="UTF-8">
-	<meta name="description" content="Ogani Template">
-	<meta name="keywords" content="Ogani, unica, creative, html">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Kepasaraja.com - Belanja Sayur Tanpa Harus Keluar Rumah</title>
-	<link rel="icon" type="assets/image/png" href="<?php echo base_url('assets/img/logo/logo.png');?>"/>
-	<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="<?php echo base_url('assets/css/bootstrap.min.css');?>" type="text/css">
-	<link rel="stylesheet" href="<?php echo base_url('assets/css/font-awesome.min.css');?>" type="text/css">
-	<link rel="stylesheet" href="<?php echo base_url('assets/css/elegant-icons.css');?>" type="text/css">
-	<link rel="stylesheet" href="<?php echo base_url('assets/css/nice-select.css');?>" type="text/css">
-	<link rel="stylesheet" href="<?php echo base_url('assets/css/jquery-ui.min.css');?>" type="text/css">
-	<link rel="stylesheet" href="<?php echo base_url('assets/css/owl.carousel.min.css');?>" type="text/css">
-	<link rel="stylesheet" href="<?php echo base_url('assets/css/slicknav.min.css');?>" type="text/css">
-	<link rel="stylesheet" href="<?php echo base_url('assets/css/style.css');?>" type="text/css">
-</head>
+<?php require ('include/head.php'); ?>
+<style type="text/css">
+	.lingkaran1{
+		width: 40px;
+		height: 40px;
+		background: #ffffff;
+		border-radius: 100%;
+	}
+	.lingkaran{
+		width: 150px;
+		height: 150px;
+		background: #ffffff;
+		border-radius: 100%;
+	}
+
+	.lingkaran3{
+		width: 55%;
+		height: 100px;
+	}
+</style>
 <body>
 	<div id="preloder">
 		<div class="loader"></div>
@@ -50,7 +52,7 @@
 		</div>
 		<nav class="humberger__menu__nav mobile-menu">
 			<ul>
-				<li class="active"><a href="./index.html">Home</a></li>
+				<li class="active"><a href="<?php echo base_url()."index.php/Home";?>">Home</a></li>
 				<li><a href="./shop-grid.html">Shop</a></li>
 				<li><a href="#">Pages</a>
 					<ul class="header__menu__dropdown">
@@ -66,15 +68,41 @@
 		</nav>
 		<div id="mobile-menu-wrap"></div>
 		<div class="header__top__right__social">
-			<a href="#"><i class="fa fa-facebook"></i></a>
-			<a href="#"><i class="fa fa-twitter"></i></a>
-			<a href="#"><i class="fa fa-linkedin"></i></a>
-			<a href="#"><i class="fa fa-pinterest-p"></i></a>
+			<?php
+		    $con=mysqli_connect("localhost","root","","db_kepasaraja");
+		    if (mysqli_connect_errno())
+		    {
+		        echo "Failed to connect to MySQL: " . mysqli_connect_error();
+		    }
+		    $result = mysqli_query($con,"SELECT * FROM tb_profile ORDER BY id DESC");
+
+		    if(mysqli_num_rows($result)>0){
+		        while($row = mysqli_fetch_array($result))
+		        {
+		    ?>
+			<a href="<?php echo $row['facebook']; ?>" target="_blank"><i class="fa fa-facebook"></i></a>
+			<a href="<?php echo $row['twitter']; ?>" target="_blank"><i class="fa fa-twitter"></i></a>
+			<a href="<?php echo $row['linkendin']; ?>" target="_balnk"><i class="fa fa-linkedin"></i></a>
+			<a href="<?php echo $row['instagram']; ?>" target="_blank"><i class="fa fa-pinterest-p"></i></a>
+			<?php } } mysqli_close($con); ?>
 		</div>
 		<div class="humberger__menu__contact">
 			<ul>
-				<li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
-				<li>Free Shipping for all Order of $99</li>
+				<?php
+			    $con=mysqli_connect("localhost","root","","db_kepasaraja");
+			    if (mysqli_connect_errno())
+			    {
+			        echo "Failed to connect to MySQL: " . mysqli_connect_error();
+			    }
+			    $result = mysqli_query($con,"SELECT * FROM tb_profile ORDER BY id DESC");
+
+			    if(mysqli_num_rows($result)>0){
+			        while($row = mysqli_fetch_array($result))
+			        {
+			    ?>
+				<li><i class="fa fa-envelope"></i> <?php echo $row['mail'];?></li>
+				<li><?php echo $row['slogan'];?></li>
+				<?php } } mysqli_close($con); ?>
 			</ul>
 		</div>
 	</div>
@@ -85,18 +113,44 @@
 					<div class="col-lg-6 col-md-6">
 						<div class="header__top__left">
 							<ul>
-								<li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
-								<li>Free Shipping for all Order of $99</li>
+								<?php
+							    $con=mysqli_connect("localhost","root","","db_kepasaraja");
+							    if (mysqli_connect_errno())
+							    {
+							        echo "Failed to connect to MySQL: " . mysqli_connect_error();
+							    }
+							    $result = mysqli_query($con,"SELECT * FROM tb_profile ORDER BY id DESC");
+
+							    if(mysqli_num_rows($result)>0){
+							        while($row = mysqli_fetch_array($result))
+							        {
+							    ?>
+								<li><i class="fa fa-envelope"></i> <?php echo $row['mail'];?></li>
+								<li><?php echo $row['slogan'];?></li>
+								<?php } } mysqli_close($con); ?>
 							</ul>
 						</div>
 					</div>
 					<div class="col-lg-6 col-md-6">
 						<div class="header__top__right">
 							<div class="header__top__right__social">
-								<a href="#"><i class="fa fa-facebook"></i></a>
-								<a href="#"><i class="fa fa-twitter"></i></a>
-								<a href="#"><i class="fa fa-linkedin"></i></a>
-								<a href="#"><i class="fa fa-instagram"></i></a>
+								<?php
+							    $con=mysqli_connect("localhost","root","","db_kepasaraja");
+							    if (mysqli_connect_errno())
+							    {
+							        echo "Failed to connect to MySQL: " . mysqli_connect_error();
+							    }
+							    $result = mysqli_query($con,"SELECT * FROM tb_profile ORDER BY id DESC");
+
+							    if(mysqli_num_rows($result)>0){
+							        while($row = mysqli_fetch_array($result))
+							        {
+							    ?>
+								<a href="<?php echo $row['facebook']; ?>" target="_blank"><i class="fa fa-facebook"></i></a>
+								<a href="<?php echo $row['twitter']; ?>" target="_blank"><i class="fa fa-twitter"></i></a>
+								<a href="<?php echo $row['linkendin']; ?>" target="_balnk"><i class="fa fa-linkedin"></i></a>
+								<a href="<?php echo $row['instagram']; ?>" target="_blank"><i class="fa fa-pinterest-p"></i></a>
+								<?php } } mysqli_close($con); ?>
 							</div>
 							<div class="header__top__right__language">
 								<img src="<?php echo base_url('assets/img/indonesia.png');?>" alt="">
@@ -119,13 +173,26 @@
 			<div class="row">
 				<div class="col-lg-3">
 					<div class="header__logo">
-						<a href="./index.html"><img src="<?php echo base_url('assets/img/brand/brand.png');?>" alt=""></a>
+						<?php
+					    $con=mysqli_connect("localhost","root","","db_kepasaraja");
+					    if (mysqli_connect_errno())
+					    {
+					        echo "Failed to connect to MySQL: " . mysqli_connect_error();
+					    }
+					    $result = mysqli_query($con,"SELECT * FROM tb_profile ORDER BY id DESC");
+
+					    if(mysqli_num_rows($result)>0){
+					        while($row = mysqli_fetch_array($result))
+					        {
+					    ?>
+						<a href="<?php echo base_url()."index.php/Home";?>"><img src="<?php echo base_url('assets/img/brand/'.$row['logo']);?>" alt=""></a>
+						<?php } } mysqli_close($con); ?>
 					</div>
 				</div>
 				<div class="col-lg-6">
 					<nav class="header__menu">
 						<ul>
-							<li class="active"><a href="./index.html">Home</a></li>
+							<li class="active"><a href="<?php echo base_url()."index.php/Home";?>">Home</a></li>
 							<li><a href="./shop-grid.html">Shop</a></li>
 							<li><a href="#">Pages</a>
 								<ul class="header__menu__dropdown">
@@ -196,8 +263,21 @@
 								<i class="fa fa-phone"></i>
 							</div>
 							<div class="hero__search__phone__text">
-								<h5>+65 11.188.888</h5>
-								<span><small>Pesan hari ini, Besok diantar</small></span>
+								<?php
+							    $con=mysqli_connect("localhost","root","","db_kepasaraja");
+							    if (mysqli_connect_errno())
+							    {
+							        echo "Failed to connect to MySQL: " . mysqli_connect_error();
+							    }
+							    $result = mysqli_query($con,"SELECT * FROM tb_profile ORDER BY id DESC");
+
+							    if(mysqli_num_rows($result)>0){
+							        while($row = mysqli_fetch_array($result))
+							        {
+							    ?>
+								<h5><?php echo $row['telepone']; ?></h5>
+								<span><small><?php echo $row['pesan']; ?></small></span>
+								<?php } } mysqli_close($con); ?>
 							</div>
 						</div>
 					</div>
@@ -562,40 +642,32 @@
 	<footer class="footer spad">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-3 col-md-6 col-sm-6">
+				<div class="col-lg-6 col-md-6 col-sm-6">
 					<div class="footer__about">
+					<?php
+					    $con=mysqli_connect("localhost","root","","db_kepasaraja");
+					    if (mysqli_connect_errno())
+					    {
+					        echo "Failed to connect to MySQL: " . mysqli_connect_error();
+					    }
+					    $result = mysqli_query($con,"SELECT * FROM tb_profile ORDER BY id DESC");
+
+					    if(mysqli_num_rows($result)>0){
+					        while($row = mysqli_fetch_array($result))
+					        {
+					    ?>
 						<div class="footer__about__logo">
-							<a href="./index.html"><img src="<?php echo base_url('assets/img/brand/brand.png');?>" alt=""></a>
+							<a href="<?php echo base_url()."index.php/Home";?>"><img src="<?php echo base_url('assets/img/brand/'.$row['logo']);?>" class="lingkaran3" alt=""></a>
 						</div>
 						<ul>
-							<li>Address: 60-49 Road 11378 New York</li>
-							<li>Phone: +65 11.188.888</li>
-							<li>Email: hello@colorlib.com</li>
+							<li>Alamat: <?php echo $row['alamat']; ?></li>
+							<li>Kontak: <?php echo $row['telepone']; ?></li>
+							<li>Email: <?php echo $row['mail']; ?></li>
 						</ul>
+					<?php } } mysqli_close($con); ?>
 					</div>
 				</div>
-				<div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
-					<div class="footer__widget">
-						<h6>Useful Links</h6>
-						<ul>
-							<li><a href="#">About Us</a></li>
-							<li><a href="#">About Our Shop</a></li>
-							<li><a href="#">Secure Shopping</a></li>
-							<li><a href="#">Delivery infomation</a></li>
-							<li><a href="#">Privacy Policy</a></li>
-							<li><a href="#">Our Sitemap</a></li>
-						</ul>
-						<ul>
-							<li><a href="#">Who We Are</a></li>
-							<li><a href="#">Our Services</a></li>
-							<li><a href="#">Projects</a></li>
-							<li><a href="#">Contact</a></li>
-							<li><a href="#">Innovation</a></li>
-							<li><a href="#">Testimonials</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-12">
+				<div class="col-lg-6 col-md-12">
 					<div class="footer__widget">
 						<h6>Join Our Newsletter Now</h6>
 						<p>Get E-mail updates about our latest shop and special offers.</p>
@@ -604,10 +676,23 @@
 							<button type="submit" class="site-btn">Subscribe</button>
 						</form>
 						<div class="footer__widget__social">
-							<a href="#"><i class="fa fa-facebook"></i></a>
-							<a href="#"><i class="fa fa-instagram"></i></a>
-							<a href="#"><i class="fa fa-twitter"></i></a>
-							<a href="#"><i class="fa fa-pinterest"></i></a>
+							<?php
+						    $con=mysqli_connect("localhost","root","","db_kepasaraja");
+						    if (mysqli_connect_errno())
+						    {
+						        echo "Failed to connect to MySQL: " . mysqli_connect_error();
+						    }
+						    $result = mysqli_query($con,"SELECT * FROM tb_profile ORDER BY id DESC");
+
+						    if(mysqli_num_rows($result)>0){
+						        while($row = mysqli_fetch_array($result))
+						        {
+						    ?>
+							<a href="<?php echo $row['facebook']; ?>" target="_blank"><i class="fa fa-facebook"></i></a>
+							<a href="<?php echo $row['twitter']; ?>" target="_blank"><i class="fa fa-twitter"></i></a>
+							<a href="<?php echo $row['linkendin']; ?>" target="_balnk"><i class="fa fa-linkedin"></i></a>
+							<a href="<?php echo $row['instagram']; ?>" target="_blank"><i class="fa fa-instagram"></i></a>
+							<?php } } mysqli_close($con); ?>
 						</div>
 					</div>
 				</div>

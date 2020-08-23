@@ -1,30 +1,31 @@
 <head>
     <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>Aplikasi Pegadaian Customer Focus</title>
-    <!-- Favicon-->
-    <link rel="icon" href="<?php echo base_url('assets/images/logo/logo.png');?>" type="image/x-icon">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
-    <!-- Bootstrap Core Css -->
-    <link href="<?php echo base_url('assets/plugins/bootstrap/css/bootstrap.css');?>" rel="stylesheet">
-    <!-- Waves Effect Css -->
-    <link href="<?php echo base_url('assets/plugins/node-waves/waves.css');?>" rel="stylesheet" />
-    <!-- Animation Css -->
-    <link href="<?php echo base_url('assets/plugins/animate-css/animate.css');?>" rel="stylesheet" />
-    <!-- JQuery DataTable Css -->
-    <link href="<?php echo base_url('assets/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css');?>" rel="stylesheet">
-    <!-- Custom Css -->
-    <link href="<?php echo base_url('assets/css/style.css');?>" rel="stylesheet">
-    <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
-    <link href="<?php echo base_url('assets/css/themes/all-themes.css');?>" rel="stylesheet" />
-    <!-- Bootstrap Select Css -->
-    <link href="<?php echo base_url('assets/plugins/bootstrap-select/css/bootstrap-select.css');?>" rel="stylesheet" />
-    <!-- Multi Select Css -->
-    <link href="<?php echo base_url('assets/plugins/multi-select/css/multi-select.css');?>" rel="stylesheet">
-    <!-- Dropzone Css -->
-    <link href="<?php echo base_url('assets/plugins/dropzone/dropzone.css');?>" rel="stylesheet">
-    <!-- Colorpicker Css -->
-    <link href="<?php echo base_url('assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css');?>" rel="stylesheet" />
+    <meta name="description" content="Ogani Template">
+    <meta name="keywords" content="Ogani, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <?php
+    $con=mysqli_connect("localhost","root","","db_kepasaraja");
+    if (mysqli_connect_errno())
+    {
+        echo "Failed to connect to MySQL: " . mysqli_connect_error();
+    }
+    $result = mysqli_query($con,"SELECT * FROM tb_profile ORDER BY id DESC");
+
+    if(mysqli_num_rows($result)>0){
+        while($row = mysqli_fetch_array($result))
+        {
+    ?>
+    <title><?php echo $row['title_head'];?></title>
+    <link rel="icon" type="assets/image/png" href="<?php echo base_url('assets/img/logo/'.$row['icon']);?>"/>
+    <?php } } mysqli_close($con); ?>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/bootstrap.min.css');?>" type="text/css">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/font-awesome.min.css');?>" type="text/css">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/elegant-icons.css');?>" type="text/css">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/nice-select.css');?>" type="text/css">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/jquery-ui.min.css');?>" type="text/css">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/owl.carousel.min.css');?>" type="text/css">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/slicknav.min.css');?>" type="text/css">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css');?>" type="text/css">
 </head>

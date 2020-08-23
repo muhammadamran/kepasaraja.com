@@ -14,10 +14,10 @@
             <a class="nav-link" href="<?php echo base_url()."index.php/AdminHome";?>" aria-expanded="false" data-target="#submenu-1" aria-controls="submenu-1"><i class="nav-icon fas fa-home"></i>Home</a>
           </li>
           <li class="nav-divider">
-            Sidebar
+            PROFILE
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="<?php echo base_url()."index.php/AdminStrukturMenu";?>" aria-expanded="false" data-target="#submenu-1" aria-controls="submenu-1"><i class="fa fas fa-th-list"></i>Struktur Menu</a>
+            <a class="nav-link" href="<?php echo base_url()."index.php/AdminProfile";?>" aria-expanded="false" data-target="#submenu-1" aria-controls="submenu-1"><i class="fa fas fa-th-list"></i>Profile</a>
           </li>
           <li class="nav-divider">
             PER-SIDERBAR

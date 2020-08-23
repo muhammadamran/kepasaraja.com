@@ -8,7 +8,7 @@ class AdminHome extends CI_Controller {
 		$this->load->model('M_Kepasar');
 
 		if($this->session->userdata('status') != 'login'){
-			redirect('login');
+			redirect('AdminLogin');
 		}
 	}
 
