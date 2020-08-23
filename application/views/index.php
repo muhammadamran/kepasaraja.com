@@ -1,6 +1,48 @@
 <!DOCTYPE html>
 <html lang="eng">
 <?php require ('include/head.php'); ?>
+<?php
+// UANG
+function matauang($angka){
+    $hasil = "Rp " . number_format($angka,2,',','.');
+    return $hasil;
+}
+
+// DATE
+function tanggal_indo($tanggal, $cetak_hari = false)
+{
+	$hari = array ( 1 =>    'Senin',
+		'Selasa',
+		'Rabu',
+		'Kamis',
+		'Jumat',
+		'Sabtu',
+		'Minggu'
+	);
+	$bulan = array (1 =>   'Januari',
+		'Februari',
+		'Maret',
+		'April',
+		'Mei',
+		'Juni',
+		'Juli',
+		'Agustus',
+		'September',
+		'Oktober',
+		'November',
+		'Desember'
+	);
+	$split    = explode('-', $tanggal);
+	$tgl_indo = $split[2] . ' ' . $bulan[ (int)$split[1] ] . ' ' . $split[0];
+
+	if ($cetak_hari) {
+		$num = date('N', strtotime($tanggal));
+		return $hari[$num] . ', ' . $tgl_indo;
+	}
+	return $tgl_indo;
+}
+
+?>
 <style type="text/css">
 	.lingkaran1{
 		width: 40px;
@@ -232,17 +274,20 @@
 							<span>Semua Kategori</span>
 						</div>
 						<ul>
-							<li><a href="#">Fresh Meat</a></li>
-							<li><a href="#">Vegetables</a></li>
-							<li><a href="#">Fruit & Nut Gifts</a></li>
-							<li><a href="#">Fresh Berries</a></li>
-							<li><a href="#">Ocean Foods</a></li>
-							<li><a href="#">Butter & Eggs</a></li>
-							<li><a href="#">Fastfood</a></li>
-							<li><a href="#">Fresh Onion</a></li>
-							<li><a href="#">Papayaya & Crisps</a></li>
-							<li><a href="#">Oatmeal</a></li>
-							<li><a href="#">Fresh Bananas</a></li>
+							<?php
+						    $con=mysqli_connect("localhost","root","","db_kepasaraja");
+						    if (mysqli_connect_errno())
+						    {
+						        echo "Failed to connect to MySQL: " . mysqli_connect_error();
+						    }
+						    $result = mysqli_query($con,"SELECT * FROM tb_kategori ORDER BY id DESC");
+
+						    if(mysqli_num_rows($result)>0){
+						        while($row = mysqli_fetch_array($result))
+						        {
+						    ?>
+							<li><a href="#"><?php echo $row['nama_kategori']; ?></a></li>
+							<?php } } mysqli_close($con); ?>	
 						</ul>
 					</div>
 				</div>
@@ -321,22 +366,47 @@
 	</section>
 	<section class="featured spad">
 		<div class="container">
-			<div class="row">
+			<!-- <div class="row">
 				<div class="col-lg-12">
+					<?php
+				    $con=mysqli_connect("localhost","root","","db_kepasaraja");
+				    if (mysqli_connect_errno())
+				    {
+				        echo "Failed to connect to MySQL: " . mysqli_connect_error();
+				    }
+				    $result = mysqli_query($con,"SELECT * FROM tb_judul WHERE status=4 ORDER BY id DESC");
+
+				    if(mysqli_num_rows($result)>0){
+				        while($row = mysqli_fetch_array($result))
+				        {
+				    ?>
 					<div class="section-title">
-						<h2>Featured Product</h2>
+						<h2><?php echo $row['judul']; ?></h2>
 					</div>
 					<div class="featured__controls">
 						<ul>
-							<li class="active" data-filter="*">Pilih Sayur Yang Kamu Mau</li>
+							<li class="active" data-filter="*"><?php echo $row['opsi']; ?></li>
 						</ul>
 					</div>
+					<?php } } mysqli_close($con); ?>
 				</div>
-			</div>
-			<div class="row featured__filter">
+			</div> -->
+			<!-- <div class="row featured__filter">
+				<?php
+			    $con=mysqli_connect("localhost","root","","db_kepasaraja");
+			    if (mysqli_connect_errno())
+			    {
+			        echo "Failed to connect to MySQL: " . mysqli_connect_error();
+			    }
+			    $result = mysqli_query($con,"SELECT * FROM tb_produk WHERE status_produk=4 ORDER BY id DESC");
+
+			    if(mysqli_num_rows($result)>0){
+			        while($row = mysqli_fetch_array($result))
+			        {
+			    ?>
 				<div class="col-lg-3 col-md-4 col-sm-6 mix vegetables fresh-meat">
 					<div class="featured__item">
-						<div class="featured__item__pic set-bg" data-setbg="<?php echo base_url('assets/img/featured/feature-3.jpg');?>">
+						<div class="featured__item__pic set-bg" data-setbg="<?php echo base_url('assets/img/produk/'.$row['gambar_produk']);?>">
 							<ul class="featured__item__pic__hover">
 								<li><a href="#"><i class="fa fa-heart"></i></a></li>
 								<li><a href="#"><i class="fa fa-retweet"></i></a></li>
@@ -344,12 +414,13 @@
 							</ul>
 						</div>
 						<div class="featured__item__text">
-							<h6><a href="#">Crab Pool Security</a></h6>
-							<h5>$30.00</h5>
+							<h6><a href="#"><?php echo $row['nama_produk']; ?></a></h6>
+							<h5><?php echo matauang($row['harga_produk']); ?></h5>
 						</div>
 					</div>
 				</div>
-			</div>
+				<?php } } mysqli_close($con); ?>
+			</div> -->
 		</div>
 	</section>
 	<div class="banner">
@@ -373,7 +444,99 @@
 			<div class="row">
 				<div class="col-lg-4 col-md-6">
 					<div class="latest-product__text">
-						<h4>Latest Products</h4>
+						<?php
+					    $con=mysqli_connect("localhost","root","","db_kepasaraja");
+					    if (mysqli_connect_errno())
+					    {
+					        echo "Failed to connect to MySQL: " . mysqli_connect_error();
+					    }
+					    $result = mysqli_query($con,"SELECT * FROM tb_judul WHERE status=1 ORDER BY id DESC");
+
+					    if(mysqli_num_rows($result)>0){
+					        while($row = mysqli_fetch_array($result))
+					        {
+					    ?>
+						<h4><?php echo $row['judul']; ?></h4>
+						<?php } } mysqli_close($con); ?>
+						<div class="latest-product__slider owl-carousel">
+							<div class="latest-prdouct__slider__item">
+								<a href="#" class="latest-product__item">
+									<div class="latest-product__item__pic">
+										<img src="<?php echo base_url('assets/img/latest-product/lp-1.jpg');?>" alt="">
+									</div>
+									<div class="latest-product__item__text">
+										<h6>Crab Pool Security</h6>
+										<span>$30.00<small><sup>1/2KG</sup></small></span>
+										<small style="text-decoration: line-through;">Crab Pool Security</small>
+									</div>
+								</a>
+								<a href="#" class="latest-product__item">
+									<div class="latest-product__item__pic">
+										<img src="<?php echo base_url('assets/img/latest-product/lp-2.jpg');?>" alt="">
+									</div>
+									<div class="latest-product__item__text">
+										<h6>Crab Pool Security</h6>
+										<span>$30.00</span>
+									</div>
+								</a>
+								<a href="#" class="latest-product__item">
+									<div class="latest-product__item__pic">
+										<img src="<?php echo base_url('assets/img/latest-product/lp-3.jpg');?>" alt="">
+									</div>
+									<div class="latest-product__item__text">
+										<h6>Crab Pool Security</h6>
+										<span>$30.00</span>
+									</div>
+								</a>
+							</div>
+							<div class="latest-prdouct__slider__item">
+								<a href="#" class="latest-product__item">
+									<div class="latest-product__item__pic">
+										<img src="<?php echo base_url('assets/img/latest-product/lp-1.jpg');?>" alt="">
+									</div>
+									<div class="latest-product__item__text">
+										<h6>Crab Pool Security</h6>
+										<span>$30.00</span>
+									</div>
+								</a>
+								<a href="#" class="latest-product__item">
+									<div class="latest-product__item__pic">
+										<img src="<?php echo base_url('assets/img/latest-product/lp-2.jpg');?>" alt="">
+									</div>
+									<div class="latest-product__item__text">
+										<h6>Crab Pool Security</h6>
+										<span>$30.00</span>
+									</div>
+								</a>
+								<a href="#" class="latest-product__item">
+									<div class="latest-product__item__pic">
+										<img src="<?php echo base_url('assets/img/latest-product/lp-3.jpg');?>" alt="">
+									</div>
+									<div class="latest-product__item__text">
+										<h6>Crab Pool Security</h6>
+										<span>$30.00</span>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6">
+					<div class="latest-product__text">
+						<?php
+					    $con=mysqli_connect("localhost","root","","db_kepasaraja");
+					    if (mysqli_connect_errno())
+					    {
+					        echo "Failed to connect to MySQL: " . mysqli_connect_error();
+					    }
+					    $result = mysqli_query($con,"SELECT * FROM tb_judul WHERE status=2 ORDER BY id DESC");
+
+					    if(mysqli_num_rows($result)>0){
+					        while($row = mysqli_fetch_array($result))
+					        {
+					    ?>
+						<h4><?php echo $row['judul']; ?></h4>
+						<?php } } mysqli_close($con); ?>
 						<div class="latest-product__slider owl-carousel">
 							<div class="latest-prdouct__slider__item">
 								<a href="#" class="latest-product__item">
@@ -438,7 +601,20 @@
 				</div>
 				<div class="col-lg-4 col-md-6">
 					<div class="latest-product__text">
-						<h4>Top Rated Products</h4>
+						<?php
+					    $con=mysqli_connect("localhost","root","","db_kepasaraja");
+					    if (mysqli_connect_errno())
+					    {
+					        echo "Failed to connect to MySQL: " . mysqli_connect_error();
+					    }
+					    $result = mysqli_query($con,"SELECT * FROM tb_judul WHERE status=3 ORDER BY id DESC");
+
+					    if(mysqli_num_rows($result)>0){
+					        while($row = mysqli_fetch_array($result))
+					        {
+					    ?>
+						<h4><?php echo $row['judul']; ?></h4>
+						<?php } } mysqli_close($con); ?>
 						<div class="latest-product__slider owl-carousel">
 							<div class="latest-prdouct__slider__item">
 								<a href="#" class="latest-product__item">
@@ -477,71 +653,7 @@
 									<div class="latest-product__item__text">
 										<h6>Crab Pool Security</h6>
 										<span>$30.00</span>
-									</div>
-								</a>
-								<a href="#" class="latest-product__item">
-									<div class="latest-product__item__pic">
-										<img src="<?php echo base_url('assets/img/latest-product/lp-2.jpg');?>" alt="">
-									</div>
-									<div class="latest-product__item__text">
 										<h6>Crab Pool Security</h6>
-										<span>$30.00</span>
-									</div>
-								</a>
-								<a href="#" class="latest-product__item">
-									<div class="latest-product__item__pic">
-										<img src="<?php echo base_url('assets/img/latest-product/lp-3.jpg');?>" alt="">
-									</div>
-									<div class="latest-product__item__text">
-										<h6>Crab Pool Security</h6>
-										<span>$30.00</span>
-									</div>
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6">
-					<div class="latest-product__text">
-						<h4>Review Products</h4>
-						<div class="latest-product__slider owl-carousel">
-							<div class="latest-prdouct__slider__item">
-								<a href="#" class="latest-product__item">
-									<div class="latest-product__item__pic">
-										<img src="<?php echo base_url('assets/img/latest-product/lp-1.jpg');?>" alt="">
-									</div>
-									<div class="latest-product__item__text">
-										<h6>Crab Pool Security</h6>
-										<span>$30.00</span>
-									</div>
-								</a>
-								<a href="#" class="latest-product__item">
-									<div class="latest-product__item__pic">
-										<img src="<?php echo base_url('assets/img/latest-product/lp-2.jpg');?>" alt="">
-									</div>
-									<div class="latest-product__item__text">
-										<h6>Crab Pool Security</h6>
-										<span>$30.00</span>
-									</div>
-								</a>
-								<a href="#" class="latest-product__item">
-									<div class="latest-product__item__pic">
-										<img src="<?php echo base_url('assets/img/latest-product/lp-3.jpg');?>" alt="">
-									</div>
-									<div class="latest-product__item__text">
-										<h6>Crab Pool Security</h6>
-										<span>$30.00</span>
-									</div>
-								</a>
-							</div>
-							<div class="latest-prdouct__slider__item">
-								<a href="#" class="latest-product__item">
-									<div class="latest-product__item__pic">
-										<img src="<?php echo base_url('assets/img/latest-product/lp-1.jpg');?>" alt="">
-									</div>
-									<div class="latest-product__item__text">
-										<h6>Crab Pool Security</h6>
-										<span>$30.00</span>
 									</div>
 								</a>
 								<a href="#" class="latest-product__item">
@@ -574,7 +686,20 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="section-title from-blog__title">
-						<h2>From The Blog</h2>
+						<?php
+					    $con=mysqli_connect("localhost","root","","db_kepasaraja");
+					    if (mysqli_connect_errno())
+					    {
+					        echo "Failed to connect to MySQL: " . mysqli_connect_error();
+					    }
+					    $result = mysqli_query($con,"SELECT * FROM tb_judul WHERE status=5 ORDER BY id DESC");
+
+					    if(mysqli_num_rows($result)>0){
+					        while($row = mysqli_fetch_array($result))
+					        {
+					    ?>
+						<h2><?php echo $row['judul']; ?></h2>
+						<?php } } mysqli_close($con); ?>
 					</div>
 				</div>
 			</div>

@@ -1,4 +1,9 @@
 <?php 
+// UANG
+function matauang($angka){
+    $hasil = "Rp " . number_format($angka,2,',','.');
+    return $hasil;
+}
 // DATE
 function tanggal_indo($tanggal, $cetak_hari = false)
 {
@@ -72,13 +77,13 @@ function tanggal_indo($tanggal, $cetak_hari = false)
 				<div class="row">
 					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 						<div class="page-header">
-							<h2 class="pageheader-title">Produk Kategori Page</h2>
+							<h2 class="pageheader-title">Produk & Harga I Page</h2>
 							<p class="pageheader-text">Proin placerat ante duiullam scelerisque a velit ac porta, fusce sit amet vestibulum mi. Morbi lobortis pulvinar quam.</p>
 							<div class="page-breadcrumb">
 								<nav aria-label="breadcrumb">
 									<ol class="breadcrumb">
 										<li class="breadcrumb-item"><a href="<?php echo base_url()."index.php/AdminHome";?>" class="breadcrumb-link">Home</a></li>
-										<li class="breadcrumb-item active" aria-current="page">Produk Kategori Page</li>
+										<li class="breadcrumb-item active" aria-current="page">Produk & Harga I Page</li>
 									</ol>
 								</nav>
 							</div>
@@ -90,24 +95,32 @@ function tanggal_indo($tanggal, $cetak_hari = false)
 					<div class="modal-dialog modal-xl">
 						<div class="modal-content">
 							<div class="modal-header">
-								<label class="modal-title">Tambah Produk Kategori</label>
+								<label class="modal-title">Tambah Produk Harga I</label>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
 							</div>
-							<form method="POST" action="<?php echo base_url() ?>index.php/AdminProdukKategori/create" enctype="multipart/form-data">
+							<form method="POST" action="<?php echo base_url() ?>index.php/AdminProdukHargaSatu/create" enctype="multipart/form-data">
 								<div class="modal-body">
-									<div class="row">	
+									<div class="row">
 										<div class="col-sm-12">
 											<div class="form-group">
-												<label>Gambar Kategori<font style="color: red">*</font></label>
-												<input type="file" class="form-control" name="gambar_kategori" placeholder="Gambar Kategori..." required="required">
+												<label>Gambar Produk<font style="color: red">*</font></label>
+												<input type="file" class="form-control" name="gambar_produk" placeholder="Gambar Produk..." required="required">
 											</div>
 										</div>	
 										<div class="col-sm-12">
 											<div class="form-group">
-												<label>Nama Kategori<font style="color: red">*</font></label>
-												<input type="text" class="form-control" name="nama_kategori" placeholder="Nama Kategori..." required="required">
+												<label>Nama Produk<font style="color: red">*</font></label>
+												<input type="text" class="form-control" name="nama_produk" placeholder="Nama Produk..." required="required">
+											</div>
+										</div>	
+										<div class="col-sm-12">
+											<div class="form-group">
+												<label>Harga Produk<font style="color: red">*</font></label>
+												<input type="number" class="form-control" name="harga_produk" placeholder="Harga Produk..." required="required">
+												<input type="hidden" class="form-control" name="status_produk" value="4">
+												<input type="hidden" class="form-control" name="date_harga" value="<?php echo date('Y-m-d') ?>">
 											</div>
 										</div>
 									</div>
@@ -127,7 +140,7 @@ function tanggal_indo($tanggal, $cetak_hari = false)
 					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 						<div class="card">
 							<div class="card-header">
-								<button class="btn bg-primary btn-flat" data-toggle="modal" data-target="#modal-add" title="Tambah Agenda Rapat"><i class="nav-icon far fa-plus-square"></i> Tambah Produk Kategori
+								<button class="btn bg-primary btn-flat" data-toggle="modal" data-target="#modal-add" title="Tambah Produk Harga"><i class="nav-icon far fa-plus-square"></i> Tambah Produk Harga I
 								</button>
 							</div>
 							<div class="card-body">
@@ -136,8 +149,11 @@ function tanggal_indo($tanggal, $cetak_hari = false)
 										<thead>
 											<tr align="center">
 												<th>ID</th>
-												<th>Gambar Kategori</th>
-												<th>Nama Kategori</th>
+												<th>Gambar Produk</th>
+												<th>Nama Produk</th>
+												<th>Harga</th>
+												<th>Status</th>
+												<th>Tanggal Update</th>
 												<th>Aksi</th>
 											</tr>
 										</thead>
@@ -148,7 +164,7 @@ function tanggal_indo($tanggal, $cetak_hari = false)
 											{
 												echo "Failed to connect to MySQL: " . mysqli_connect_error();
 											}
-											$result = mysqli_query($con,"SELECT * FROM tb_kategori ORDER BY id DESC");
+											$result = mysqli_query($con,"SELECT * FROM tb_produk WHERE status_produk=4 ORDER BY id DESC");
 
 											if(mysqli_num_rows($result)>0){
 												while($row = mysqli_fetch_array($result))
@@ -157,41 +173,44 @@ function tanggal_indo($tanggal, $cetak_hari = false)
 													echo "<td>".$row['id'] . "</td>";
 													?>
 													<?php
-													if ($row['gambar_kategori']==NULL) {
+													if ($row['gambar_produk']==NULL) {
 													?>
 														<td align="center">
-															<h6><font style="color: red"><b><i>Anda belum mengupload Gambar</i></b></font></h6>
+															<h6><font style="color: red"><b><i>Anda belum mengupload Gambar Produk</i></b></font></h6>
 														</td>
 													<?php
 													}else{
 													?>
 														<td align="center">
-															<img src="<?php echo base_url('assets/img/kategori/'.$row['gambar_kategori'])?>" class="lingkaran2">
+															<img src="<?php echo base_url('assets/img/produk/'.$row['gambar_produk'])?>" class="lingkaran2">
 														</td>
 													<?php
 													}
 													?>
 													<?php
-													echo "<td>".$row['nama_kategori'] . "</td>";
+													echo "<td>".$row['nama_produk'] . "</td>";
+													echo "<td>".matauang($row['harga_produk']) . "</td>";
+													echo "<td>".$row['status_produk'] . "</td>";
+													echo "<td>".tanggal_indo($row['date_harga'], true) . "</td>";
 													echo "<td width='300px'>
-													<a href='#' data-toggle='modal' data-target='#gambar$row[id]' title='Upload Gambar Kategori'><span class='btn btn-warning btn-sm'><small>Gambar Kategori</small></span></a>
+													<a href='#' data-toggle='modal' data-target='#gambar$row[id]' title='Upload Gambar Produk'><span class='btn btn-warning btn-sm'><small>Gambar Produk</small></span></a>
 													<a href='#' data-toggle='modal' data-target='#edit$row[id]' title='Edit'><span class='btn btn-success btn-sm'><small>Edit</small></span></a>
 													<a href='#' data-toggle='modal' data-target='#delete$row[id]' title='Delete'><span class='btn btn-danger btn-sm'><small>Hapus</small></span></a>
 													</td>";
 													echo "</tr>";
 													?>
 
-													<!-- GAMBAR KATEGORI -->
+													<!-- GAMBAR PRODUK -->
 													<div class="modal fade" id="gambar<?php echo $row['id'];?>" role="dialog">
 														<div class="modal-dialog modal-xl">
 															<div class="modal-content">
 																<div class="modal-header">
-																	<label class="modal-title">Upload Gambar Kategori</label>
+																	<label class="modal-title">Upload Gambar Produk</label>
 																	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 																		<span aria-hidden="true">&times;</span>
 																	</button>
 																</div>
-																<?php echo form_open_multipart(site_url('AdminProdukKategori/updategambar/'.$row['id']));?>
+																<?php echo form_open_multipart(site_url('AdminProdukHargaSatu/updategambar/'.$row['id']));?>
 																<div class="modal-body">
 																	<div class="row">
 																		<div class="col-sm-12">
@@ -202,8 +221,8 @@ function tanggal_indo($tanggal, $cetak_hari = false)
 																		</div>
 																		<div class="col-sm-12">
 																			<div class="form-group">
-																				<label>Gambar Kategori</label>
-																				<input type="file" class="form-control" name="gambar_kategori">
+																				<label>Gambar Produk</label>
+																				<input type="file" class="form-control" name="gambar_produk">
 																			</div>
 																		</div>
 																	</div>
@@ -223,12 +242,12 @@ function tanggal_indo($tanggal, $cetak_hari = false)
 														<div class="modal-dialog modal-xl">
 															<div class="modal-content">
 																<div class="modal-header">
-																	<label class="modal-title">Update Produk Kategori</label>
+																	<label class="modal-title">Update Produk Harga I</label>
 																	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 																		<span aria-hidden="true">&times;</span>
 																	</button>
 																</div>
-																<?php echo form_open_multipart(site_url('AdminProdukKategori/update/'.$row['id']));?>
+																<?php echo form_open_multipart(site_url('AdminProdukHargaSatu/update/'.$row['id']));?>
 																<div class="modal-body">
 																	<div class="row">
 																		<div class="col-sm-12">
@@ -238,9 +257,32 @@ function tanggal_indo($tanggal, $cetak_hari = false)
 																			</div>
 																		</div>
 																		<div class="col-sm-12">
+																		<hr>
+																			<div align="center">
+																				<h3>Gambar Produk</h3>
+																				<hr>
+																				<?php
+																				if ($row['gambar_produk']==NULL) { ?>
+																					<h6><font style="color: red"><b><i>Anda belum mengupload Gambar Produk</i></b></font></h6>
+																				<?php }else{ ?>
+																					<img src="<?php echo base_url().'assets/img/produk/'. $row['gambar_produk'];?>" class="lingkaran3" alt="User profile picture">   
+																				<?php } ?>
+																			</div>
+																			<br>
+																			<hr>
+																		</div>
+																		<div class="col-sm-12">
 																			<div class="form-group">
-																				<label>Nama Kategori</label>
-																				<input type="text" class="form-control" name="nama_kategori" placeholder="Nama Kategori..." value="<?php echo $row['nama_kategori']; ?>">
+																				<label>Nama Produk</label>
+																				<input type="text" class="form-control" name="nama_produk" placeholder="Nama Produk..." value="<?php echo $row['nama_produk']; ?>">
+																			</div>
+																		</div>
+																		<div class="col-sm-12">
+																			<div class="form-group">
+																				<label>Harga Produk</label>
+																				<input type="number" class="form-control" name="harga_produk" placeholder="Harga Produk..." value="<?php echo $row['harga_produk']; ?>">
+																				<input type="hidden" class="form-control" name="status_produk" placeholder="Harga Produk..." value="4">
+																				<input type="hidden" class="form-control" name="date_harga" value="<?php echo date('Y-m-d') ?>">
 																			</div>
 																		</div>
 																	</div>
@@ -260,30 +302,30 @@ function tanggal_indo($tanggal, $cetak_hari = false)
 														<div class="modal-dialog">
 															<div class="modal-content">
 																<div class="modal-header">
-																	<label class="modal-title">Hapus Produk Kategori</label>
+																	<label class="modal-title">Hapus Produk Harga I</label>
 																	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 																		<span aria-hidden="true">&times;</span>
 																	</button>
 																</div>
 																<div class="modal-body">
-																	<?php echo form_open_multipart(site_url('AdminProdukKategori/delete/'.$row['id'])); ?>
+																	<?php echo form_open_multipart(site_url('AdminProdukHargaSatu/delete/'.$row['id'])); ?>
 																		<div class="form-group">
 																			<label>Anda yakin akan menghapus data ini?</label>
 																			<h6>ID : <b><u><?php echo $row['id'];?></u></b></h6>
 																			<hr>
 																			<div align="center">
-																				<h3>Gambar Kategori</h3>
+																				<h3>Gambar Produk</h3>
 																				<hr>
 																				<?php
-																				if ($row['gambar_kategori']==NULL) { ?>
+																				if ($row['gambar_produk']==NULL) { ?>
 																					<h6><font style="color: red"><b><i>Anda belum mengupload Gambar</i></b></font></h6>
 																				<?php }else{ ?>
-																					<img src="<?php echo base_url().'assets/img/kategori/'. $row['gambar_kategori'];?>" class="lingkaran3" alt="User profile picture">   
+																					<img src="<?php echo base_url().'assets/img/produk/'. $row['gambar_produk'];?>" class="lingkaran3" alt="User profile picture">   
 																				<?php } ?>
 																			</div>
 																			<br>
 																			<hr>
-																			<h6>Nama Kategori : <b><u><?php echo $row['nama_kategori'];?></u></b></h6>
+																			<h6>Nama Produk : <b><u><?php echo $row['nama_produk'];?></u></b></h6>
 																			<input type="hidden" name="id" class="form-control" value="<?php echo $row['id'];?>" required>
 																		</div>
 																		<button type="submit" name="delete" class="btn btn-danger btn-block btn-flat">Yes</button>
