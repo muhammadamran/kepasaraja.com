@@ -38,7 +38,7 @@ class AdminLogin extends CI_Controller {
 				);
 
 				$this->session->set_userdata($data_session);
-				redirect('Home');
+				redirect('AdminHome');
 			}else{
 				$this->load->view('404');
 			}

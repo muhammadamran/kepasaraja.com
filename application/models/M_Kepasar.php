@@ -14,4 +14,11 @@ class M_Kepasar extends CI_Model{
 		}
 	}
 
+/////////////////////UPDATE//////////////////////////
+	function update_user($table,$data,$user_id)
+	{
+		$this->db->where('user_id', $user_id);
+		$this->db->update($table,$data); 
+	}
+
 }
