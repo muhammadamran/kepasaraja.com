@@ -20,10 +20,10 @@
             <a class="nav-link" href="<?php echo base_url()."index.php/AdminProfile";?>" aria-expanded="false" data-target="#submenu-1" aria-controls="submenu-1"><i class="fa fas fa-th-list"></i>Profile</a>
           </li>
           <li class="nav-divider">
-            PER-SIDERBAR
+            PRODUK
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="<?php echo base_url()."index.php/AdminManageAplikasi";?>" aria-expanded="false" data-target="#submenu-1" aria-controls="submenu-1"><i class="fa fas fa-th-list"></i>Manage Aplikasi</a>
+            <a class="nav-link" href="<?php echo base_url()."index.php/AdminProdukKategori";?>" aria-expanded="false" data-target="#submenu-1" aria-controls="submenu-1"><i class="fa fas fa-th-list"></i>Produk Kategori</a>
           </li>
           <li class="nav-item ">
             <a class="nav-link" href="<?php echo base_url()."index.php/AdminManagePerpus";?>" aria-expanded="false" data-target="#submenu-1" aria-controls="submenu-1"><i class="fa fas fa-th-list"></i>Manage Perpustakaan</a>

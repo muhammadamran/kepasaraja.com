@@ -297,36 +297,24 @@
 		<div class="container">
 			<div class="row">
 				<div class="categories__slider owl-carousel">
+					<?php
+				    $con=mysqli_connect("localhost","root","","db_kepasaraja");
+				    if (mysqli_connect_errno())
+				    {
+				        echo "Failed to connect to MySQL: " . mysqli_connect_error();
+				    }
+				    $result = mysqli_query($con,"SELECT * FROM tb_kategori ORDER BY id DESC");
+
+				    if(mysqli_num_rows($result)>0){
+				        while($row = mysqli_fetch_array($result))
+				        {
+				    ?>
 					<div class="col-lg-3">
-						<div class="categories__item set-bg" data-setbg="<?php echo base_url('assets/img/categories/cat-1.jpg');?>">
-							<h5><a href="#">Hakim</a></h5>
+						<div class="categories__item set-bg" data-setbg="<?php echo base_url('assets/img/kategori/'.$row['gambar_kategori']);?>">
+							<h5><a href="#"><?php echo $row['nama_kategori']; ?></a></h5>
 						</div>
 					</div>
-					<div class="col-lg-3">
-						<div class="categories__item set-bg" data-setbg="<?php echo base_url('assets/img/categories/cat-1.jpg');?>">
-							<h5><a href="#">Amran</a></h5>
-						</div>
-					</div>
-					<div class="col-lg-3">
-						<div class="categories__item set-bg" data-setbg="<?php echo base_url('assets/img/categories/cat-2.jpg');?>">
-							<h5><a href="#">Dried Fruit</a></h5>
-						</div>
-					</div>
-					<div class="col-lg-3">
-						<div class="categories__item set-bg" data-setbg="<?php echo base_url('assets/img/categories/cat-3.jpg');?>">
-							<h5><a href="#">Vegetables</a></h5>
-						</div>
-					</div>
-					<div class="col-lg-3">
-						<div class="categories__item set-bg" data-setbg="<?php echo base_url('assets/img/categories/cat-4.jpg');?>">
-							<h5><a href="#">drink fruits</a></h5>
-						</div>
-					</div>
-					<div class="col-lg-3">
-						<div class="categories__item set-bg" data-setbg="<?php echo base_url('assets/img/categories/cat-5.jpg');?>">
-							<h5><a href="#">drink fruits</a></h5>
-						</div>
-					</div>
+					<?php } } mysqli_close($con); ?>
 				</div>
 			</div>
 		</div>
