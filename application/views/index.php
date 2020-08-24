@@ -125,7 +125,7 @@ function tanggal_indo($tanggal, $cetak_hari = false)
 			<a href="<?php echo $row['facebook']; ?>" target="_blank"><i class="fa fa-facebook"></i></a>
 			<a href="<?php echo $row['twitter']; ?>" target="_blank"><i class="fa fa-twitter"></i></a>
 			<a href="<?php echo $row['linkendin']; ?>" target="_balnk"><i class="fa fa-linkedin"></i></a>
-			<a href="<?php echo $row['instagram']; ?>" target="_blank"><i class="fa fa-pinterest-p"></i></a>
+			<a href="<?php echo $row['instagram']; ?>" target="_blank"><i class="fa fa-instagram"></i></a>
 			<?php } } mysqli_close($con); ?>
 		</div>
 		<div class="humberger__menu__contact">
@@ -191,7 +191,7 @@ function tanggal_indo($tanggal, $cetak_hari = false)
 								<a href="<?php echo $row['facebook']; ?>" target="_blank"><i class="fa fa-facebook"></i></a>
 								<a href="<?php echo $row['twitter']; ?>" target="_blank"><i class="fa fa-twitter"></i></a>
 								<a href="<?php echo $row['linkendin']; ?>" target="_balnk"><i class="fa fa-linkedin"></i></a>
-								<a href="<?php echo $row['instagram']; ?>" target="_blank"><i class="fa fa-pinterest-p"></i></a>
+								<a href="<?php echo $row['instagram']; ?>" target="_blank"><i class="fa fa-instagram"></i></a>
 								<?php } } mysqli_close($con); ?>
 							</div>
 							<div class="header__top__right__language">
@@ -820,6 +820,34 @@ function tanggal_indo($tanggal, $cetak_hari = false)
 				</div>
 			</div>
 		</footer>
+<!-- GetButton.io widget -->
+<script type="text/javascript">
+    (function () {
+        var options = {
+        	<?php
+		    $con=mysqli_connect("localhost","root","","db_kepasaraja");
+		    if (mysqli_connect_errno())
+		    {
+		        echo "Failed to connect to MySQL: " . mysqli_connect_error();
+		    }
+		    $result = mysqli_query($con,"SELECT * FROM tb_profile ORDER BY id DESC");
+
+		    if(mysqli_num_rows($result)>0){
+		        while($row = mysqli_fetch_array($result))
+		        {
+		    ?>
+            whatsapp: "<?php echo $row['telepone'];?>", // WhatsApp number
+			<?php } } mysqli_close($con); ?>
+            call_to_action: "Pesan disini", // Call to action
+            position: "right", // Position may be 'right' or 'left'
+        };
+        var proto = document.location.protocol, host = "getbutton.io", url = proto + "//static." + host;
+        var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = url + '/widget-send-button/js/init.js';
+        s.onload = function () { WhWidgetSendButton.init(host, proto, options); };
+        var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);
+    })();
+</script>
+<!-- /GetButton.io widget -->
 		<script src="<?php echo base_url('assets/js/jquery-3.3.1.min.js');?>"></script>
 		<script src="<?php echo base_url('assets/js/bootstrap.min.js');?>"></script>
 		<script src="<?php echo base_url('assets/js/jquery.nice-select.min.js');?>"></script>
